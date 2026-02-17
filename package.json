@@ -1,25 +1,17 @@
 {
-  "dependencies": {
-    "@playwright/test": "^1.58.2"
-  },
   "name": "playwright_portfolio",
   "version": "1.0.0",
-  "description": "This is a Playwright Portolio",
+  "description": "Portfolio de pruebas automatizadas con Playwright usando Page Object Model",
   "main": "index.js",
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx playwright test",
+    "report": "npx playwright show-report"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gonzalo1997/playwright_portfolio.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/gonzalo1997/playwright_portfolio/issues"
-  },
-  "homepage": "https://github.com/gonzalo1997/playwright_portfolio#readme"
+  "author": "Gonzalo",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "typescript": "^5.0.0"
+  }
 }
