@@ -1,15 +1,25 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class LoginPage {
-  constructor(private page: Page) {}
+    private page: Page;
+    private loginEmailInput : Locator;
+    private loginPasswordInput : Locator;
+    private loginButton : Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.loginEmailInput = page.locator('[data-qa="login-email"]');
+    this.loginPasswordInput = page.locator('[data-qa="login-password"]');
+    this.loginButton = page.locator('[data-qa="login-button"]');
+  }
 
   async goto() {
     await this.page.goto('https://automationexercise.com/login');
   }
 
-  async login(user: string, password: string) {
-    await this.page.fill('#username', user);
-    await this.page.fill('#password', password);
-    await this.page.click('#submit');
+  async login(email: string, password: string) {
+    await this.loginEmailInput.fill(email);
+    await this.loginPasswordInput.fill(password);
+    await this.loginButton.click();
   }
 }
