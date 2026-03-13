@@ -166,6 +166,10 @@ export class SignupPage {
         return this.loggedInAsText;
     }
 
+    async clickContinue() {
+        await this.continueButton.click();
+    }
+
     async clickDeleteAccount() {
         await this.deleteAccountLink.click();
     }

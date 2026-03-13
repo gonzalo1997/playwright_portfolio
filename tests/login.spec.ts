@@ -34,7 +34,7 @@ test('Test Case 1: Register User', async ({ page }) => {
 
   // Step 7: Fill signup form, Step 8: Check newsletter & offers and Step 9: Fill address info
   await signupPage.fillAccountInformation({
-    gender: 'male',
+    gender: 'Male',
     password: 'password123456',
     day: '1',
     month: 'January',
@@ -60,7 +60,7 @@ test('Test Case 1: Register User', async ({ page }) => {
   await expect(signupPage.accountCreatedHeadingGetter).toBeVisible();
 
   // Step 12: Continue
-  await signupPage.clickCreateAccount();
+  await signupPage.clickContinue();
 
   // Step 13: Verify logged in
   await expect(signupPage.loggedInAsTextGetter).toBeVisible();
