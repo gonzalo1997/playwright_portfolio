@@ -77,6 +77,19 @@ export class SignupPage {
         this.accountDeletedHeading = this.page.locator('h2[data-qa="account-deleted"]');
     }
 
+    async clickSignup() {
+        await this.signupButton.click();
+    }
+
+    get newUserSignupHeadingGetter() {
+        return this.newUserSignupHeading;
+    }
+
+    async fillSignupForm(name: string, email: string) {
+        await this.signupNameInput.fill(name);
+        await this.signupEmailInput.fill(email);
+    }
+
     async fillAccountInformation(gender: string, password: string, day: string, month: string, year: string, newsLetter: boolean = true, optin: boolean = true) {
         await this.chooseGender(gender);
         await this.passwordInput.fill(password);
@@ -121,5 +134,9 @@ export class SignupPage {
         await this.cityInput.fill(city);
         await this.zipcodeInput.fill(zipcode);
         await this.mobileNumberInput.fill(mobileNumber);
+    }
+
+    async clickCreateAccount() {
+        await this.createAccountButton.click();
     }
 }
