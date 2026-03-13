@@ -128,7 +128,7 @@ export class SignupPage {
         await this.mobileNumberInput.fill(accountInfo.mobileNumber);
     }
 
-    async chooseGender(gender: string) {
+    private async chooseGender(gender: string) {
         if (gender === 'Male') {
             await this.genderMaleRadio.check();
         } else if (gender === 'Female') {
@@ -139,13 +139,13 @@ export class SignupPage {
         }
     }
 
-    async selectDateOfBirth(day: string, month: string, year: string) {
+    private async selectDateOfBirth(day: string, month: string, year: string) {
         await this.daysSelect.selectOption(day);
         await this.monthsSelect.selectOption(month);
         await this.yearsSelect.selectOption(year);
     }
 
-    async checkOptionalCheckboxes(newsLetter: boolean, optin: boolean) {
+    private async checkOptionalCheckboxes(newsLetter: boolean, optin: boolean) {
         if (newsLetter) {
             await this.newsletterCheckbox.check();
         }
