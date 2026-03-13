@@ -77,27 +77,49 @@ export class SignupPage {
         this.accountDeletedHeading = this.page.locator('h2[data-qa="account-deleted"]');
     }
 
-    get newUserSignup() {
-        return this.newUserSignupHeading;
+    async fillAccountInformation(gender: string, password: string, day: string, month: string, year: string, newsLetter: boolean = true, optin: boolean = true) {
+        await this.chooseGender(gender);
+        await this.passwordInput.fill(password);
+        await this.selectDateOfBirth(day, month, year);
+        await this.checkOptionalCheckboxes(newsLetter, optin);
     }
 
-    get signupNameInputField() {
-        return this.signupNameInput;
+    async chooseGender(gender: string) {
+        if (gender === 'Male') {
+            await this.genderMaleRadio.check();
+        } else if (gender === 'Female') {
+            await this.genderFemaleRadio.check();
+        }
+        else {
+            throw new Error('Invalid gender option. Use "Male" or "Female".');
+        }
     }
 
-    get signupEmailInputField() {
-        return this.signupEmailInput;
+    async selectDateOfBirth(day: string, month: string, year: string) {
+        await this.daysSelect.selectOption(day);
+        await this.monthsSelect.selectOption(month);
+        await this.yearsSelect.selectOption(year);
     }
 
-    get signupButtonElement() {
-        return this.signupButton;
+    async checkOptionalCheckboxes(newsLetter: boolean, optin: boolean) {
+        if (newsLetter) {
+            await this.newsletterCheckbox.check();
+        }
+        if (optin) {
+            await this.optinCheckbox.check();
+        }
     }
 
-    get genderMale() {
-        return this.genderMaleRadio;
-    }
-
-    get genderFemale() {
-        return this.genderFemaleRadio;
+    async fillAddressInformation(firstName: string, lastName: string, company: string, address1: string, address2: string, country: string, state: string, city: string, zipcode: string, mobileNumber: string) {
+        await this.firstNameInput.fill(firstName);
+        await this.lastNameInput.fill(lastName);
+        await this.companyInput.fill(company);
+        await this.address1Input.fill(address1);
+        await this.address2Input.fill(address2);
+        await this.countrySelect.selectOption(country);
+        await this.stateInput.fill(state);
+        await this.cityInput.fill(city);
+        await this.zipcodeInput.fill(zipcode);
+        await this.mobileNumberInput.fill(mobileNumber);
     }
 }
