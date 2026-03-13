@@ -72,6 +72,7 @@ export class SignupPage {
         this.accountCreatedHeading = this.page.locator('h2[data-qa="account-created"]');
         this.continueButton = this.page.locator('a[data-qa="continue-button"]');
 
+        //Locators for logged in state and account deletion
         this.loggedInAsText = this.page.locator('a:has-text("Logged in as Gonzalo Tester")');
         this.deleteAccountLink = this.page.locator('a[href="/delete_account"]');
         this.accountDeletedHeading = this.page.locator('h2[data-qa="account-deleted"]');
@@ -138,5 +139,21 @@ export class SignupPage {
 
     async clickCreateAccount() {
         await this.createAccountButton.click();
+    }
+
+    get accountCreatedHeadingGetter() {
+        return this.accountCreatedHeading;
+    }
+
+    get loggedInAsTextGetter() {
+        return this.loggedInAsText;
+    }
+
+    async clickDeleteAccount() {
+        await this.deleteAccountLink.click();
+    }
+
+    get accountDeletedHeadingGetter() {
+        return this.accountDeletedHeading;
     }
 }
