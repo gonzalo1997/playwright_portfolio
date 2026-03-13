@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../src/pages/login.page';
+import { LoginPage} from '../src/pages/login.page';
+import { HomePage } from '../src/pages/home.page';
+import { SignupPage } from '../src/pages/signup.page';
 
 test('Login Test', async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -9,6 +11,9 @@ test('Login Test', async ({ page }) => {
 });
 
 test('Test Case 1: Register User', async ({ page }) => {
+  const homePage = new HomePage(page);
+  const signupPage = new SignupPage(page);
+
   // Step 1: Navigate to site
   await page.goto('https://automationexercise.com');
 
@@ -16,57 +21,39 @@ test('Test Case 1: Register User', async ({ page }) => {
   await expect(page.locator('img[alt="Website for automation practice"]')).toBeVisible();
 
   // Step 3: Click Signup/Login
-  await page.click('a[href="/login"]');
+  await homePage.clickSignupLogin();
 
   // Step 4: Verify "New User Signup!"
   await expect(page.locator('h2:has-text("New User Signup!")')).toBeVisible();
 
   // Step 5: Enter name and email
-  await page.fill('input[data-qa="signup-name"]', 'Gonzalo Tester');
-  await page.fill('input[data-qa="signup-email"]', `gonzalo${Date.now()}@test.com`);
+  await signupPage.fillSignupForm('Gonzalo Tester', `gonzalo${Date.now()}@test.com`);
 
   // Step 6: Click Signup
-  await page.click('button[data-qa="signup-button"]');
+  await signupPage.clickSignup();
 
-  // Step 7: Fill signup form
-  await page.check('#id_gender1');
-  await page.fill('#password', 'StrongPassword123');
-  await page.selectOption('#days', '10');
-  await page.selectOption('#months', '5');
-  await page.selectOption('#years', '1997');
-
-  // Step 8: Check newsletter & offers
-  await page.check('#newsletter');
-  await page.check('#optin');
+  // Step 7: Fill signup form and Step 8: Check newsletter & offers
+  await signupPage.fillAccountInformation('Male', 'StrongPassword123', '10', '5', '1997', true, false);
 
   // Step 9: Fill address info
-  await page.fill('#first_name', 'Gonzalo');
-  await page.fill('#last_name', 'Tester');
-  await page.fill('#company', 'Automation Inc');
-  await page.fill('#address1', '123 Test Street');
-  await page.fill('#address2', 'Suite 456');
-  await page.selectOption('#country', 'Canada');
-  await page.fill('#state', 'Ontario');
-  await page.fill('#city', 'Toronto');
-  await page.fill('#zipcode', 'M1A1A1');
-  await page.fill('#mobile_number', '+1234567890');
+  await signupPage.fillAddressInformation('Gonzalo', 'Tester', 'Test Company', '123 Test St', 'Apt 4', 'United States', 'Test State', 'Test City', '12345', '555-1234');
 
   // Step 10: Create Account
-  await page.click('button[data-qa="create-account"]');
+  await signupPage.clickCreateAccount();
 
   // Step 11: Verify account created
-  await expect(page.locator('h2:has-text("Account Created!")')).toBeVisible();
+  await expect(signupPage.accountCreatedHeadingGetter).toBeVisible();
 
   // Step 12: Continue
-  await page.click('a[data-qa="continue-button"]');
+  await signupPage.clickCreateAccount();
 
   // Step 13: Verify logged in
-  await expect(page.locator('a:has-text("Logged in as Gonzalo Tester")')).toBeVisible();
+  await expect(signupPage.loggedInAsTextGetter).toBeVisible();
 
   // Step 14: Delete account
-  await page.click('a[href="/delete_account"]');
+  await signupPage.clickDeleteAccount();
 
   // Step 15: Verify account deleted
-  await expect(page.locator('h2:has-text("Account Deleted!")')).toBeVisible();
+  await expect(signupPage.accountDeletedHeadingGetter).toBeVisible();
 });
 

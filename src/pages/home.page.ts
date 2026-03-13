@@ -20,4 +20,8 @@ export class HomePage {
   async gotoHome() {
     await this.page.goto('https://automationexercise.com');
   }
+
+  async clickSignupLogin() {
+    await this.signupLoginLink.click();
+  }
 }
