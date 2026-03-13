@@ -80,4 +80,24 @@ export class SignupPage {
     get newUserSignup() {
         return this.newUserSignupHeading;
     }
+
+    get signupNameInputField() {
+        return this.signupNameInput;
+    }
+
+    get signupEmailInputField() {
+        return this.signupEmailInput;
+    }
+
+    get signupButtonElement() {
+        return this.signupButton;
+    }
+
+    get genderMale() {
+        return this.genderMaleRadio;
+    }
+
+    get genderFemale() {
+        return this.genderFemaleRadio;
+    }
 }
