@@ -32,11 +32,26 @@ test('Test Case 1: Register User', async ({ page }) => {
   // Step 6: Click Signup
   await signupPage.clickSignup();
 
-  // Step 7: Fill signup form and Step 8: Check newsletter & offers
-  await signupPage.fillAccountInformation('Male', 'StrongPassword123', '10', '5', '1997', true, false);
-
-  // Step 9: Fill address info
-  await signupPage.fillAddressInformation('Gonzalo', 'Tester', 'Test Company', '123 Test St', 'Apt 4', 'United States', 'Test State', 'Test City', '12345', '555-1234');
+  // Step 7: Fill signup form, Step 8: Check newsletter & offers and Step 9: Fill address info
+  await signupPage.fillAccountInformation({
+    gender: 'male',
+    password: 'password123456',
+    day: '1',
+    month: 'January',
+    year: '1997',
+    newsLetter: true,
+    optin: false,
+    firstName: 'Gonzalo',
+    lastName: 'Tester',
+    company: 'Test Company',
+    address1: '123 Test St',
+    address2: 'Apt 4',
+    country: 'United States',
+    state: 'Test State',
+    city: 'Test City',
+    zipcode: '12345',
+    mobileNumber: '555-1234'
+  });
 
   // Step 10: Create Account
   await signupPage.clickCreateAccount();
