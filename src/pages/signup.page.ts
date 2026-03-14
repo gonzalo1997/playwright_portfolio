@@ -87,7 +87,7 @@ export class SignupPage {
     async fillAccountInformation(user: TestUser) {
         await this.chooseGender(user.gender);
         await this.passwordInput.fill(user.password);
-        await this.selectDateOfBirth(user.day, user.month, user.year);
+        await this.selectDateOfBirth(user.birth_day, user.birth_month, user.birth_year);
         await this.checkOptionalCheckboxes(user.newsLetter ?? false, user.optin ?? false);
         await this.firstNameInput.fill(user.firstName);
         await this.lastNameInput.fill(user.lastName);

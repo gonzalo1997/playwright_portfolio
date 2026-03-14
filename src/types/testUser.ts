@@ -3,9 +3,9 @@ export interface TestUser {
     email: string;
     password: string;
     gender: string;
-    day: string;
-    month: string;
-    year: string;
+    birth_day: string;
+    birth_month: string;
+    birth_year: string;
     newsLetter?: boolean;
     optin?: boolean;
     firstName: string;
