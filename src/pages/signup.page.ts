@@ -1,24 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-
-interface AccountInfo {
-    gender: string;
-    password: string;
-    day: string;
-    month: string;
-    year: string;
-    newsLetter : boolean;
-    optin: boolean;
-    firstName: string;
-    lastName: string;
-    company: string;
-    address1: string;
-    address2: string;
-    country: string;
-    state: string;
-    city: string;
-    zipcode: string;
-    mobileNumber: string;
-}
+import { TestUser } from '../types/testUser';
 
 export class SignupPage {
     private page: Page;
@@ -63,7 +44,7 @@ export class SignupPage {
         this.signupNameInput = this.page.locator('input[data-qa="signup-name"]');
         this.signupEmailInput = this.page.locator('input[data-qa="signup-email"]');
         this.signupButton = this.page.locator('button[data-qa="signup-button"]');
-        
+
         // Signup Account Information locators
         this.genderMaleRadio = this.page.locator('#id_gender1');
         this.genderFemaleRadio = this.page.locator('#id_gender2');
@@ -98,26 +79,30 @@ export class SignupPage {
         return this.newUserSignupHeading;
     }
 
-    async fillSignupForm(name: string, email: string) {
-        await this.signupNameInput.fill(name);
-        await this.signupEmailInput.fill(email);
+    async fillSignupForm(user: TestUser) {
+        await this.signupNameInput.fill(user.name);
+        await this.signupEmailInput.fill(user.email);
     }
 
-    async fillAccountInformation(accountInfo: AccountInfo) {
-        await this.chooseGender(accountInfo.gender);
-        await this.passwordInput.fill(accountInfo.password);
-        await this.selectDateOfBirth(accountInfo.day, accountInfo.month, accountInfo.year);
-        await this.checkOptionalCheckboxes(accountInfo.newsLetter, accountInfo.optin);
-        await this.firstNameInput.fill(accountInfo.firstName);
-        await this.lastNameInput.fill(accountInfo.lastName);
-        await this.companyInput.fill(accountInfo.company);
-        await this.address1Input.fill(accountInfo.address1);
-        await this.address2Input.fill(accountInfo.address2);
-        await this.countrySelect.selectOption(accountInfo.country);
-        await this.stateInput.fill(accountInfo.state);
-        await this.cityInput.fill(accountInfo.city);
-        await this.zipcodeInput.fill(accountInfo.zipcode);
-        await this.mobileNumberInput.fill(accountInfo.mobileNumber);
+    async fillAccountInformation(user: TestUser) {
+        await this.chooseGender(user.gender);
+        await this.passwordInput.fill(user.password);
+        await this.selectDateOfBirth(user.day, user.month, user.year);
+        await this.checkOptionalCheckboxes(user.newsLetter ?? false, user.optin ?? false);
+        await this.firstNameInput.fill(user.firstName);
+        await this.lastNameInput.fill(user.lastName);
+        if (user.company) {
+            await this.companyInput.fill(user.company);
+        }
+        await this.address1Input.fill(user.address1);
+        if (user.address2) {
+            await this.address2Input.fill(user.address2);
+        }
+        await this.countrySelect.selectOption(user.country);
+        await this.stateInput.fill(user.state);
+        await this.cityInput.fill(user.city);
+        await this.zipcodeInput.fill(user.zipcode);
+        await this.mobileNumberInput.fill(user.mobileNumber);
     }
 
     private async chooseGender(gender: string) {

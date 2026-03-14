@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { TestUser } from '../types/testUser';
 
 export class LoginPage {
     private page: Page;
@@ -23,9 +24,9 @@ export class LoginPage {
     return this.loginToYourAccountHeading;
   }
 
-  async fillLoginCredentials(email: string, password: string) {
-    await this.emailAdressInput.fill(email);
-    await this.passwordInput.fill(password);
+  async fillLoginCredentials(user: TestUser) {
+    await this.emailAdressInput.fill(user.email);
+    await this.passwordInput.fill(user.password);
   }
 
   async clickLogin() {
