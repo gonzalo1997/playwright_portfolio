@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage} from '../src/pages/login.page';
-import { HomePage } from '../src/pages/home.page';
-import { SignupPage } from '../src/pages/signup.page';
-import { TestUser } from '../src/types/testUser';
+import { LoginPage} from '../../src/pages/login.page';
+import { HomePage } from '../../src/pages/home.page';
+import { SignupPage } from '../../src/pages/signup.page';
+import { TestUser } from '../../src/types/testUser';
 
 test('Test Case 1: Register User', async ({ page }) => {
   const homePage = new HomePage(page);
