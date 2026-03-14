@@ -3,13 +3,6 @@ import { LoginPage} from '../src/pages/login.page';
 import { HomePage } from '../src/pages/home.page';
 import { SignupPage } from '../src/pages/signup.page';
 
-test('Login Test', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  //await loginPage.goto();
-  //await loginPage.login('gonzalo123456@gmail.com', 'password123456');
-  //await expect(page).toHaveURL('https://automationexercise.com/login');
-});
-
 test('Test Case 1: Register User', async ({ page }) => {
   const homePage = new HomePage(page);
   const signupPage = new SignupPage(page);
@@ -63,12 +56,44 @@ test('Test Case 1: Register User', async ({ page }) => {
   await signupPage.clickContinue();
 
   // Step 13: Verify logged in
-  await expect(signupPage.loggedInAsTextGetter).toBeVisible();
+  await expect(homePage.loggedInAsTextGetter).toBeVisible();
 
   // Step 14: Delete account
-  await signupPage.clickDeleteAccount();
+  await homePage.clickDeleteAccount();
 
   // Step 15: Verify account deleted
-  await expect(signupPage.accountDeletedHeadingGetter).toBeVisible();
+  await expect(homePage.accountDeletedHeadingGetter).toBeVisible();
+});
+
+test('Test Case 2: Login User with correct credentials', async ({ page }) => {
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+
+  // Step 1: Navigate
+  await page.goto('https://automationexercise.com');
+
+  // Step 2: Verify home page
+  await expect(page.locator('img[alt="Website for automation practice"]')).toBeVisible();
+
+  // Step 3: Click Signup/Login
+  await homePage.clickSignupLogin();
+
+  // Step 4: Verify login form
+  await expect(page.locator('h2:has-text("Login to your account")')).toBeVisible();
+
+  // Step 5: Enter credentials
+  await loginPage.fillLoginCredentials('your_registered_email@test.com', 'yourPassword123');
+
+  // Step 6: Click Login
+  await loginPage.clickLogin();
+
+  // Step 7: Verify logged in
+  await expect(homePage.loggedInAsTextGetter).toBeVisible();
+
+  // Step 8: Delete account
+  await homePage.clickDeleteAccount();
+
+  // Step 9: Verify account deleted
+  await expect(homePage.accountDeletedHeadingGetter).toBeVisible();
 });
 
