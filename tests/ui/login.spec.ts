@@ -3,6 +3,7 @@ import { LoginPage} from '../../src/pages/login.page';
 import { HomePage } from '../../src/pages/home.page';
 import { SignupPage } from '../../src/pages/signup.page';
 import { TestUser } from '../../src/types/testUser';
+import { createUser } from '../../src/utils/apiHelper';
 
 test('Test Case 1: Register User', async ({ page }) => {
   const homePage = new HomePage(page);
@@ -69,7 +70,7 @@ test('Test Case 1: Register User', async ({ page }) => {
   await expect(homePage.accountDeletedHeadingGetter).toBeVisible();
 });
 
-test('Test Case 2: Login User with correct credentials', async ({ page }) => {
+test('Test Case 2: Login User with correct credentials', async ({ page, request }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
   const user: TestUser = {
@@ -93,6 +94,8 @@ test('Test Case 2: Login User with correct credentials', async ({ page }) => {
     zipcode: '12345',
     mobileNumber: '555-1234'
   };
+
+  await createUser(request, user);
 
   // Step 1: Navigate
   await page.goto('https://automationexercise.com');
