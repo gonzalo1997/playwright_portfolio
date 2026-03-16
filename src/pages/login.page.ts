@@ -7,6 +7,7 @@ export class LoginPage {
     private emailAdressInput : Locator;
     private passwordInput : Locator;
     private loginButton : Locator;
+    private wrongEmailOrPasswordAlert : Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -14,6 +15,7 @@ export class LoginPage {
     this.emailAdressInput = page.locator('[data-qa="login-email"]');
     this.passwordInput = page.locator('[data-qa="login-password"]');
     this.loginButton = page.locator('[data-qa="login-button"]');
+    this.wrongEmailOrPasswordAlert = page.locator('p:has-text("Your email or password is incorrect!")');
   }
 
   async goto() {
@@ -31,5 +33,9 @@ export class LoginPage {
 
   async clickLogin() {
     await this.loginButton.click();
+  }
+
+  get wrongEmailOrPasswordAlertGetter() {
+    return this.wrongEmailOrPasswordAlert;
   }
 }
