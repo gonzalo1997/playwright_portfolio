@@ -5,12 +5,12 @@ import { SignupPage } from '../../src/pages/signup.page';
 import { TestUser } from '../../src/types/testUser';
 import { createUser } from '../../src/utils/apiHelper';
 import { navigateToHome } from '../../src/utils/uiHelper';
-import { createTestUser } from '../../src/utils/userFactory';
+import { buildTestUser } from '../../src/utils/userFactory';
 
 test('Test Case 1: Register User', async ({ page }) => {
   const homePage = new HomePage(page);
   const signupPage = new SignupPage(page);
-  const user = createTestUser();
+  const user = buildTestUser();
 
   // Step 1: Navigate to site
   await page.goto('https://automationexercise.com');
@@ -55,7 +55,7 @@ test('Test Case 1: Register User', async ({ page }) => {
 test('Test Case 2: Login User with correct credentials', async ({ page, request }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  const user = createTestUser();
+  const user = buildTestUser();
 
   await createUser(request, user);
 
@@ -87,7 +87,7 @@ test('Test Case 2: Login User with correct credentials', async ({ page, request 
 test('Test Case 3: Login User with incorrect email and password', async ({ page }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  const user = createTestUser({
+  const user = buildTestUser({
     email: `wrong${Date.now()}@test.com`,
     password: 'WrongPassword123'
   });
@@ -109,5 +109,6 @@ test('Test Case 3: Login User with incorrect email and password', async ({ page 
 
   await expect(loginPage.wrongEmailOrPasswordAlertGetter).toBeVisible();
 });
+
 
 

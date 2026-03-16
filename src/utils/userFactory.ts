@@ -1,6 +1,6 @@
 import { TestUser } from '../types/testUser';
 
-export function createTestUser(overrides: Partial<TestUser> = {}): TestUser {
+export function buildTestUser(overrides: Partial<TestUser> = {}): TestUser {
   return {
     name: 'Gonzalo Tester',
     email: `user${Date.now()}@test.com`,
