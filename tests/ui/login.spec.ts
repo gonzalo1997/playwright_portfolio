@@ -4,31 +4,13 @@ import { HomePage } from '../../src/pages/home.page';
 import { SignupPage } from '../../src/pages/signup.page';
 import { TestUser } from '../../src/types/testUser';
 import { createUser } from '../../src/utils/apiHelper';
+import { navigateToHome } from '../../src/utils/uiHelper';
+import { createTestUser } from '../../src/utils/userFactory';
 
 test('Test Case 1: Register User', async ({ page }) => {
   const homePage = new HomePage(page);
   const signupPage = new SignupPage(page);
-  const user: TestUser = {
-    name: 'Gonzalo Tester',
-    email: `gonzalo${Date.now()}@test.com`,
-    password: 'password123456',
-    gender: 'Male',
-    birth_day: '1',
-    birth_month: 'January',
-    birth_year: '1997',
-    newsLetter: true,
-    optin: false,
-    firstName: 'Gonzalo',
-    lastName: 'Tester',
-    company: 'Test Company',
-    address1: '123 Test St',
-    address2: 'Apt 4',
-    country: 'United States',
-    state: 'Test State',
-    city: 'Test City',
-    zipcode: '12345',
-    mobileNumber: '555-1234'
-  };
+  const user = createTestUser();
 
   // Step 1: Navigate to site
   await page.goto('https://automationexercise.com');
@@ -73,35 +55,12 @@ test('Test Case 1: Register User', async ({ page }) => {
 test('Test Case 2: Login User with correct credentials', async ({ page, request }) => {
   const homePage = new HomePage(page);
   const loginPage = new LoginPage(page);
-  const user: TestUser = {
-    name: 'Gonzalo Tester',
-    email: `gonzalo${Date.now()}@test.com`,
-    password: 'password123456',
-    gender: 'Male',
-    birth_day: '1',
-    birth_month: 'January',
-    birth_year: '1997',
-    newsLetter: true,
-    optin: false,
-    firstName: 'Gonzalo',
-    lastName: 'Tester',
-    company: 'Test Company',
-    address1: '123 Test St',
-    address2: 'Apt 4',
-    country: 'United States',
-    state: 'Test State',
-    city: 'Test City',
-    zipcode: '12345',
-    mobileNumber: '555-1234'
-  };
+  const user = createTestUser();
 
   await createUser(request, user);
 
-  // Step 1: Navigate
-  await page.goto('https://automationexercise.com');
-
-  // Step 2: Verify home page
-  await expect(page.locator('img[alt="Website for automation practice"]')).toBeVisible();
+  // Step 1: Navigate and Step 2: Verify home page
+  await navigateToHome(page);
 
   // Step 3: Click Signup/Login
   await homePage.clickSignupLogin();
@@ -124,4 +83,31 @@ test('Test Case 2: Login User with correct credentials', async ({ page, request 
   // Step 9: Verify account deleted
   await expect(homePage.accountDeletedHeadingGetter).toBeVisible();
 });
+
+test('Test Case 3: Login User with incorrect email and password', async ({ page }) => {
+  const homePage = new HomePage(page);
+  const loginPage = new LoginPage(page);
+  const user = createTestUser({
+    email: `wrong${Date.now()}@test.com`,
+    password: 'WrongPassword123'
+  });
+  
+  // Step 1: Navigate and Step 2: Verify home page
+  await navigateToHome(page);
+
+  // Step 3: Click Signup/Login
+  await homePage.clickSignupLogin();
+
+  // Step 4: Verify login form
+  await expect(loginPage.loginToYourAccountHeadingGetter).toBeVisible();
+
+  // Step 5: Enter credentials
+  await loginPage.fillLoginCredentials(user);
+
+  // Step 6: Click Login
+  await loginPage.clickLogin();
+
+  await expect(loginPage.wrongEmailOrPasswordAlertGetter).toBeVisible();
+});
+
 
